@@ -1,12 +1,17 @@
 name: Deploy SMART DINE to GitHub Pages
+
 on:
   push:
     branches:
       - smart-dine-prototype
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
