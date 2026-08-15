@@ -2,6 +2,7 @@
   "name": "smart-dine-prototype",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "SMART DINE - Mobile-first college canteen ordering prototype",
   "scripts": {
     "dev": "vite",
