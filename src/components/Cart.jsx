@@ -47,7 +47,9 @@ export default function Cart({cart, updateCart, onPlaceOrder, onBack}) {
           <div className="cart">
             {cart.map(it => (
               <div key={it.id} style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
-                <div style={{width:56,height:56,borderRadius:8,background:'#fff',display:'grid',placeItems:'center',fontSize:22}}>{it.emoji}</div>
+                <div className="cart-thumb">
+  <img src={it.image} alt={it.name} />
+</div>
                 <div style={{flex:1}}>
                   <div style={{fontWeight:700}}>{it.name}</div>
                   <div className="muted">₹{it.price} • Qty: {it.qty}</div>

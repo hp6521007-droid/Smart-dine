@@ -15,7 +15,13 @@ export default function Menu({items, onAdd, onBack, onOpenDetails}){
         <div style={{marginTop:10}}>
           {items.map(it => (
             <div className="food-row" key={it.id}>
-              <div className="thumb" onClick={()=>onOpenDetails(it)} style={{cursor:'pointer'}}>{it.emoji}</div>
+              <div
+  className="thumb"
+  onClick={()=>onOpenDetails(it)}
+  style={{cursor:'pointer'}}
+>
+  <img src={it.image} alt={it.name} />
+</div>
               <div className="row-main">
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <div>
