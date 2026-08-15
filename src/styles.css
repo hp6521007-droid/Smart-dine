@@ -271,3 +271,29 @@ textarea { width:100%; min-height:86px; padding:10px; border-radius:10px; border
 .cart-thumb img {
   border-radius: 8px;
 }
+@media (max-width: 600px) {
+  body {
+    display: block;
+    background: #fff;
+  }
+
+  .app-phone {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .app-main {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 90px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 24px);
+    bottom: 12px;
+  }
+}
