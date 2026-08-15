@@ -25,7 +25,7 @@ export function generateSampleOrder(){
     total: 150,
     pickupTime: nowPlusMinutes(15),
     pickupLocation: 'Main Campus Canteen',
-    student: { name:'Sample Student', id:'S123456' },
+    student: { name:'Harsh, Devansh, Dhruvi', id:'S123456' },
     statusHistory: [
       { key:'placed', label:'Order Placed', ts: now },
       { key:'paid', label:'Payment Confirmed', ts: now }

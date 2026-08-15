@@ -7,9 +7,12 @@ export default function Home({items, onAdd, onOpenMenu, onOpenDetails}){
   const popular = items.slice(0,4)
   return (
     <div>
-      <Header onDemo={()=>{
-        alert('Open Profile → Presentation Demo to run a full presentation flow.')
-      }} />
+     <Header
+  onMenu={onOpenMenu}
+  onDemo={()=>{
+    alert('Open Profile → Presentation Demo to run a full presentation flow.')
+  }}
+/>
       <div style={{marginTop:12}}>
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
           <div className="section-title">Today's Special</div>

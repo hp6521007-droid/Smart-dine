@@ -1,22 +1,65 @@
 import React from 'react'
 
-export default function Header({onDemo}){
+export default function Header({ onDemo, onMenu }) {
   return (
-    <div>
-      <div className="brand">
-        <div className="logo">
-          <span className="emoji">🍽️</span>
-          <span>SMART DINE</span>
+    <div className="modern-header">
+
+      {/* Top navigation */}
+      <div className="header-top">
+        <button
+          className="icon-button"
+          onClick={onMenu}
+          aria-label="Open menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <button className="heart-button" aria-label="Favorites">
+          ♡
+        </button>
+      </div>
+
+      {/* Center logo */}
+      <div className="brand-center">
+        <div className="smart-logo">
+          <div className="smart-logo-inner">SD</div>
         </div>
-        <div style={{marginLeft:'auto'}} className="subtle">IAR University</div>
+
+        <div className="smart-dine-title">
+          <span>SMART</span> DINE
+        </div>
+
+        <div className="smart-dine-tagline">
+          EAT SMART · LIVE WELL
+        </div>
       </div>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-        <div className="muted">Main Campus Canteen</div>
-        <button className="btn btn-ghost" onClick={onDemo}>Presentation Demo</button>
+
+      {/* Campus information */}
+      <div className="campus-row">
+        <div className="campus-name">
+          <span className="campus-dot"></span>
+          Main Campus Canteen
+        </div>
+
+        <div className="university-name">
+          IAR University
+        </div>
       </div>
-      <div style={{marginTop:10}} className="search">
+
+      {/* Demo button */}
+      <div className="demo-row">
+        <button className="btn btn-ghost" onClick={onDemo}>
+          ▣ Presentation Demo
+        </button>
+      </div>
+
+      {/* Search */}
+      <div className="search">
         <input placeholder="Search food (e.g. Dosa, Coffee)" />
       </div>
+
     </div>
   )
 }
