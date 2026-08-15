@@ -13,7 +13,7 @@ export default function Profile({onPlaceDemoOrder, setRoute}){
       <div style={{display:'flex',alignItems:'center',gap:10}}>
         <div style={{width:64,height:64, borderRadius:12, background:'#fff', display:'grid',placeItems:'center', fontSize:28}}>👩‍🎓</div>
         <div>
-          <div style={{fontWeight:800}}>Harsh, Devansh, Dhruvi</div>
+          <div style={{fontWeight:800}}>Sample Student</div>
           <div className="muted">S123456 • IAR University</div>
         </div>
       </div>
