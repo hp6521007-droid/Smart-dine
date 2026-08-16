@@ -16,10 +16,11 @@ export default function Home({
   return (
     <div>
       <Header
-        onDemo={() => {
-          alert('Open Profile → Presentation Demo to run a full presentation flow.')
-        }}
-      />
+  onMenu={onOpenMenu}
+  onDemo={() => {
+    alert('Open Profile → Presentation Demo to run a full presentation flow.')
+  }}
+/>
 
       <div style={{ marginTop: 12 }}>
 
