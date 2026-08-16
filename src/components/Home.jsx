@@ -118,7 +118,10 @@ export default function Home({
           >
 
             {items.map(it => (
-              <div className="food-row" key={it.id}>
+              <div
+                className="food-row"
+                key={it.id}
+              >
 
                 {/* Food image */}
                 <div
