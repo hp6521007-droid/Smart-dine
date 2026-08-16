@@ -1,8 +1,17 @@
 import React from 'react'
 
-export default function FoodCard({ item, onAdd, onOpenDetails }) {
+export default function FoodCard({
+  item,
+  onAdd,
+  onRemove,
+  getCartQty,
+  onOpenDetails
+}) {
+  const qty = getCartQty ? getCartQty(item) : 0
+
   return (
     <div className="card" role="listitem">
+
       <div
         className="food-img"
         onClick={() => onOpenDetails(item)}
@@ -50,10 +59,36 @@ export default function FoodCard({ item, onAdd, onOpenDetails }) {
           ₹{item.price}
         </div>
 
-        <button className="btn" onClick={() => onAdd(item)}>
-          Add
-        </button>
+        {qty === 0 ? (
+          <button
+            className="btn"
+            onClick={() => onAdd(item)}
+          >
+            +
+          </button>
+        ) : (
+          <div className="qty-control">
+            <button
+              className="qty-btn"
+              onClick={() => onRemove(item)}
+            >
+              −
+            </button>
+
+            <span className="qty-number">
+              {qty}
+            </span>
+
+            <button
+              className="qty-btn"
+              onClick={() => onAdd(item)}
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
+
     </div>
   )
 }

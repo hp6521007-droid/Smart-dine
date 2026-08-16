@@ -10,29 +10,74 @@ import OrderConfirmation from './components/OrderConfirmation'
 import sampleItems from './data/items'
 
 export default function App(){
-  const [route, setRoute] = useState('home') // home, menu, details, cart, orders, profile, confirm
+  const [route, setRoute] = useState('home')
   const [cart, setCart] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('sd_cart')) || [] } catch { return [] }
+    try {
+      return JSON.parse(localStorage.getItem('sd_cart')) || []
+    } catch {
+      return []
+    }
   })
+
   const [orders, setOrders] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('sd_orders')) || [] } catch { return [] }
+    try {
+      return JSON.parse(localStorage.getItem('sd_orders')) || []
+    } catch {
+      return []
+    }
   })
+
   const [items] = useState(sampleItems)
   const [selectedItem, setSelectedItem] = useState(null)
   const [lastPlacedOrder, setLastPlacedOrder] = useState(null)
 
-  useEffect(()=> { localStorage.setItem('sd_cart', JSON.stringify(cart)) }, [cart])
-  useEffect(()=> { localStorage.setItem('sd_orders', JSON.stringify(orders)) }, [orders])
+  useEffect(() => {
+    localStorage.setItem('sd_cart', JSON.stringify(cart))
+  }, [cart])
+
+  useEffect(() => {
+    localStorage.setItem('sd_orders', JSON.stringify(orders))
+  }, [orders])
 
   function addToCart(item){
-    setCart(prev=>{
+    setCart(prev => {
       const existing = prev.find(p => p.id === item.id)
+
       if(existing){
-        return prev.map(p => p.id === item.id ? {...p, qty: p.qty + 1} : p)
-      } else {
-        return [...prev, {...item, qty:1}]
+        return prev.map(p =>
+          p.id === item.id
+            ? { ...p, qty: p.qty + 1 }
+            : p
+        )
       }
+
+      return [...prev, { ...item, qty: 1 }]
     })
+  }
+
+  function decreaseFromCart(item){
+    setCart(prev => {
+      const existing = prev.find(p => p.id === item.id)
+
+      if(!existing){
+        return prev
+      }
+
+      if(existing.qty <= 1){
+        return prev.filter(p => p.id !== item.id)
+      }
+
+      return prev.map(p =>
+        p.id === item.id
+          ? { ...p, qty: p.qty - 1 }
+          : p
+      )
+    })
+  }
+
+  function getCartQty(item){
+    const existing = cart.find(p => p.id === item.id)
+    return existing ? existing.qty : 0
   }
 
   function updateCart(updated){
@@ -45,25 +90,82 @@ export default function App(){
   }
 
   function placeDemoOrder(order){
-    // add order to orders list
     setOrders(prev => [order, ...prev])
-    // clear cart
     setCart([])
     setLastPlacedOrder(order)
-    // go to confirmation screen
     setRoute('confirm')
   }
 
   return (
     <>
-      {route === 'home' && <Home items={items} onAdd={addToCart} onOpenMenu={()=>setRoute('menu')} onOpenDetails={openDetails} />}
-      {route === 'menu' && <Menu items={items} onAdd={addToCart} onBack={()=>setRoute('home')} onOpenDetails={openDetails} />}
-      {route === 'details' && selectedItem && <FoodDetails item={selectedItem} onAdd={(it)=>{ addToCart(it); setRoute('cart') }} onBack={()=>setRoute('menu')} />}
-      {route === 'cart' && <Cart cart={cart} updateCart={updateCart} onPlaceOrder={placeDemoOrder} onBack={()=>setRoute('menu')} />}
-      {route === 'confirm' && lastPlacedOrder && <OrderConfirmation order={lastPlacedOrder} onDone={()=>setRoute('orders')} />}
-      {route === 'orders' && <Orders orders={orders} setOrders={setOrders} />}
-      {route === 'profile' && <Profile onPlaceDemoOrder={placeDemoOrder} setRoute={setRoute} />}
-      <BottomNav current={route} onChange={setRoute} cartCount={cart.reduce((s,c)=>s+c.qty,0)} />
+      {route === 'home' && (
+        <Home
+          items={items}
+          onAdd={addToCart}
+          onRemove={decreaseFromCart}
+          getCartQty={getCartQty}
+          onOpenMenu={() => setRoute('menu')}
+          onOpenDetails={openDetails}
+        />
+      )}
+
+      {route === 'menu' && (
+        <Menu
+          items={items}
+          onAdd={addToCart}
+          onRemove={decreaseFromCart}
+          getCartQty={getCartQty}
+          onBack={() => setRoute('home')}
+          onOpenDetails={openDetails}
+        />
+      )}
+
+      {route === 'details' && selectedItem && (
+        <FoodDetails
+          item={selectedItem}
+          onAdd={(it) => {
+            addToCart(it)
+            setRoute('cart')
+          }}
+          onBack={() => setRoute('menu')}
+        />
+      )}
+
+      {route === 'cart' && (
+        <Cart
+          cart={cart}
+          updateCart={updateCart}
+          onPlaceOrder={placeDemoOrder}
+          onBack={() => setRoute('menu')}
+        />
+      )}
+
+      {route === 'confirm' && lastPlacedOrder && (
+        <OrderConfirmation
+          order={lastPlacedOrder}
+          onDone={() => setRoute('orders')}
+        />
+      )}
+
+      {route === 'orders' && (
+        <Orders
+          orders={orders}
+          setOrders={setOrders}
+        />
+      )}
+
+      {route === 'profile' && (
+        <Profile
+          onPlaceDemoOrder={placeDemoOrder}
+          setRoute={setRoute}
+        />
+      )}
+
+      <BottomNav
+        current={route}
+        onChange={setRoute}
+        cartCount={cart.reduce((s, c) => s + c.qty, 0)}
+      />
     </>
   )
 }
