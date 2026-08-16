@@ -10,7 +10,40 @@ export default function FoodDetails({item, onAdd, onBack}){
 
       <div style={{marginTop:12}}>
         <div style={{display:'grid',gap:12}}>
-          <div style={{width:'100%',height:200,borderRadius:12,display:'grid',placeItems:'center',fontSize:56,background:'linear-gradient(135deg,#fff3cd,#fff6e5)'}}>{item.emoji}</div>
+         <div
+  style={{
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    overflow: 'hidden',
+    background: '#f3f4f6'
+  }}
+>
+  {item.image ? (
+    <img
+      src={item.image}
+      alt={item.name}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }}
+    />
+  ) : (
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'grid',
+        placeItems: 'center',
+        fontSize: 56
+      }}
+    >
+      {item.emoji}
+    </div>
+  )}
+</div>
           <div>
             <div style={{fontWeight:800,fontSize:20}}>{item.name}</div>
             <div className="muted" style={{marginTop:6}}>{item.desc}</div>
